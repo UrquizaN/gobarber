@@ -9,7 +9,7 @@ export class CreateUsers1603751874231 implements MigrationInterface {
                 columns: [
                     {
                         name: 'id',
-                        type: 'varchar',
+                        type: 'uuid',
                         isPrimary: true,
                         default: 'uuid_generate_v4()'
                     },
