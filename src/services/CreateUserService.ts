@@ -5,35 +5,35 @@ import AppError from '../error/AppError';
 import User from '../models/User';
 
 interface Request {
-    name: string;
-    email: string;
-    password: string;
+  name: string;
+  email: string;
+  password: string;
 }
 
 class CreateUserService {
-    public async execute( { name, email, password }: Request): Promise<User> {
-        const userRepository = getRepository(User);
+  public async execute({ name, email, password }: Request): Promise<User> {
+    const userRepository = getRepository(User);
 
-        const checkUserExists = await userRepository.findOne({
-            where: { email }
-        })
+    const checkUserExists = await userRepository.findOne({
+      where: { email },
+    });
 
-        if(checkUserExists){
-            throw new AppError('This email is already in use');
-        }
-
-        const hashedPassword = await hash(password, 8);
-
-        const user = userRepository.create({
-            name,
-            email,
-            password: hashedPassword,
-        })
-
-        await userRepository.save(user);
-
-        return user;
+    if (checkUserExists) {
+      throw new AppError('This email is already in use');
     }
+
+    const hashedPassword = await hash(password, 8);
+
+    const user = userRepository.create({
+      name,
+      email,
+      password: hashedPassword,
+    });
+
+    await userRepository.save(user);
+
+    return user;
+  }
 }
 
 export default CreateUserService;

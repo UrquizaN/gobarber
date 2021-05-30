@@ -4,7 +4,7 @@
     "port": 5432,
     "username": "postgres",
     "password": "0000",
-    "database": "gostack_gobarber",
+    "database": "postgres",
     "entities": ["./src/models/*.ts"],
     "migrations": [
         "./src/database/migrations/*.ts"
