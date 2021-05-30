@@ -2,9 +2,9 @@ import { Router } from 'express';
 
 import AuthenticateUserService from '../services/AuthenticateUserService';
 
-const authenticatesRouter = Router();
+const authenticationsRouter = Router();
 
-authenticatesRouter.post('/', async (request, response) => {
+authenticationsRouter.post('/', async (request, response) => {
   const { email, password } = request.body;
 
   const authenticateUser = new AuthenticateUserService();
@@ -19,4 +19,4 @@ authenticatesRouter.post('/', async (request, response) => {
   return response.json({ user, token });
 });
 
-export default authenticatesRouter;
+export default authenticationsRouter;
