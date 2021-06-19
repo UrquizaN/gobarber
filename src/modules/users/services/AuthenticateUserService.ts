@@ -1,26 +1,26 @@
-import { getRepository } from 'typeorm';
 import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 
 import AppError from '@shared/error/AppError';
 import User from '@modules/users/infra/typeorm/entities/User';
 import authConfig from '@config/auth';
+import IUsersRepository from '../repositories/IUsersRepository';
 
-interface Request {
+interface IRequest {
   email: string;
   password: string;
 }
 
-interface Response {
+interface IResponse {
   user: User;
   token: string;
 }
 
 class AuthenticateService {
-  public async execute({ email, password }: Request): Promise<Response> {
-    const userRepository = getRepository(User);
+  constructor(private userRepository: IUsersRepository) {}
 
-    const user = await userRepository.findOne({ where: { email } });
+  public async execute({ email, password }: IRequest): Promise<IResponse> {
+    const user = await this.userRepository.findByEmail(email);
 
     if (!user) {
       throw new AppError('Incorrect e-mail', 401);
