@@ -5,9 +5,9 @@ import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository';
 
 describe('CreateUsers', () => {
   it('should be able to create a new user', async () => {
-    const fakeAppointmentRepository = new FakeUsersRepository();
+    const fakeUserRepository = new FakeUsersRepository();
 
-    const createUser = new CreateUserService(fakeAppointmentRepository);
+    const createUser = new CreateUserService(fakeUserRepository);
 
     const user = await createUser.execute({
       name: 'Jhon Doe',
@@ -19,20 +19,20 @@ describe('CreateUsers', () => {
   });
 
   it("shouldn't be able to create a new user with the same email", async () => {
-    const fakeAppointmentRepository = new FakeUsersRepository();
+    const fakeUserRepository = new FakeUsersRepository();
 
-    const createUser = new CreateUserService(fakeAppointmentRepository);
+    const createUser = new CreateUserService(fakeUserRepository);
 
     await createUser.execute({
-      name: 'Jhon Doe',
-      email: 'jhondoe@email.com',
+      name: 'John Doe',
+      email: 'johndoe@email.com',
       password: '123456',
     });
 
     expect(
       createUser.execute({
-        name: 'Jhon Doe',
-        email: 'jhondoe@email.com',
+        name: 'John Doe',
+        email: 'johndoe@email.com',
         password: '123456',
       }),
     ).rejects.toBeInstanceOf(AppError);
